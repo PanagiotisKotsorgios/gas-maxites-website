@@ -243,8 +243,12 @@ h4 { font-size: 1rem; margin: 0 0 .6em; }
     display: flex; flex-direction: column; gap: .15rem;
   }
   /* When drawer is open, hide the hamburger so there's only one X (the drawer's close button) */
-  .site-nav.is-open ~ .nav-toggle,
-  body.nav-open .nav-toggle { opacity: 0; visibility: hidden; pointer-events: none; }
+  body.nav-open .nav-toggle { display: none !important; }
+  /* Drawer + backdrop are moved to <body> via JS on mobile so their
+     position:fixed escapes .site-header's containing block (backdrop-filter/animation).
+     These high z-indices ensure they render over all page content. */
+  .site-nav { z-index: 9999; }
+  .nav-backdrop { z-index: 9998; }
   .site-nav > .drawer-scroll > a,
   .site-nav .has-dropdown > a {
     display: flex; align-items: center; gap: .85rem;
@@ -340,25 +344,8 @@ h4 { font-size: 1rem; margin: 0 0 .6em; }
   /* Body scroll lock when drawer open */
   body.nav-open { overflow: hidden; }
 
-  /* Entrance stagger for drawer links */
-  .site-nav.is-open > .drawer-scroll > a,
-  .site-nav.is-open .has-dropdown {
-    animation: pl-fade-up .5s cubic-bezier(.2,.7,.2,1) both;
-    animation-delay: calc(.15s + var(--dl, 0) * .04s);
-  }
-  .site-nav.is-open > .drawer-scroll > *:nth-child(1) { --dl: 0; }
-  .site-nav.is-open > .drawer-scroll > *:nth-child(2) { --dl: 1; }
-  .site-nav.is-open > .drawer-scroll > *:nth-child(3) { --dl: 2; }
-  .site-nav.is-open > .drawer-scroll > *:nth-child(4) { --dl: 3; }
-  .site-nav.is-open > .drawer-scroll > *:nth-child(5) { --dl: 4; }
-  .site-nav.is-open > .drawer-scroll > *:nth-child(6) { --dl: 5; }
-  .site-nav.is-open > .drawer-scroll > *:nth-child(7) { --dl: 6; }
-  .site-nav.is-open > .drawer-scroll > *:nth-child(8) { --dl: 7; }
-  .site-nav.is-open > .drawer-scroll > *:nth-child(9) { --dl: 8; }
-  .site-nav.is-open .drawer-foot {
-    animation: pl-fade-up .55s cubic-bezier(.2,.7,.2,1) both;
-    animation-delay: .55s;
-  }
+  /* Drawer links are always visible once the drawer slides in —
+     the drawer itself is the entrance animation. */
 }
 
 /* =========================================================

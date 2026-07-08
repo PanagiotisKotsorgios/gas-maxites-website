@@ -11,6 +11,27 @@ document.addEventListener('DOMContentLoaded', () => {
   const navBackdrop = document.querySelector('.nav-backdrop');
   const drawerClose = document.querySelector('.drawer-close');
 
+  // On mobile the drawer must be a direct child of <body>, escaping any
+  // ancestor of .site-header that becomes a containing block for
+  // position:fixed (backdrop-filter / animation / etc.). On desktop it
+  // must live inside .header-inner where the flex row expects it.
+  const navHome     = nav && nav.parentElement;         // desktop home
+  const backdropHome = navBackdrop && navBackdrop.parentElement;
+  const isMobileVP  = () => window.matchMedia('(max-width: 960px)').matches;
+
+  const syncDrawerLocation = () => {
+    if (!nav) return;
+    if (isMobileVP()) {
+      if (nav.parentElement !== document.body) document.body.appendChild(nav);
+      if (navBackdrop && navBackdrop.parentElement !== document.body) document.body.appendChild(navBackdrop);
+    } else {
+      if (navHome && nav.parentElement !== navHome) navHome.appendChild(nav);
+      if (backdropHome && navBackdrop && navBackdrop.parentElement !== backdropHome) backdropHome.appendChild(navBackdrop);
+    }
+  };
+  syncDrawerLocation();
+  window.addEventListener('resize', syncDrawerLocation);
+
   const isMobile = () => window.matchMedia('(max-width: 960px)').matches;
 
   const openDrawer = () => {
