@@ -52,31 +52,51 @@ $active      = $active      ?? '';
     <a class="brand" href="<?= SITE_URL ?>/">
       <img src="<?= SITE_URL ?>/assets/img/logo.jpg" alt="<?= e(SITE_NAME) ?>" class="brand-logo">
     </a>
-    <button class="nav-toggle" aria-label="Μενού" aria-expanded="false">
+    <button class="nav-toggle" aria-label="Άνοιγμα μενού" aria-expanded="false" aria-controls="siteNav">
       <span></span><span></span><span></span>
     </button>
-    <nav class="site-nav">
-      <a href="<?= SITE_URL ?>/"             class="<?= $active==='home'?'is-active':'' ?>">Αρχική</a>
-      <div class="has-dropdown">
-        <a href="<?= SITE_URL ?>/about.php" class="<?= in_array($active,['about','history','master'])?'is-active':'' ?>">Ο Σύλλογος <i class="fa-solid fa-chevron-down"></i></a>
-        <div class="dropdown">
-          <a href="<?= SITE_URL ?>/about.php">Ποιοι είμαστε</a>
-          <a href="<?= SITE_URL ?>/history.php">Η ιστορία μας</a>
-          <a href="<?= SITE_URL ?>/master.php">Ο δάσκαλος</a>
+    <div class="nav-backdrop" aria-hidden="true"></div>
+    <nav class="site-nav" id="siteNav" aria-label="Κύριο μενού">
+      <div class="drawer-head">
+        <a class="drawer-brand" href="<?= SITE_URL ?>/">
+          <img src="<?= SITE_URL ?>/assets/img/logo.jpg" alt="<?= e(SITE_NAME) ?>">
+          <span><strong><?= e(SITE_NAME_SHORT) ?></strong><em>Taekwondo Μεσολόγγι</em></span>
+        </a>
+        <button class="drawer-close" type="button" aria-label="Κλείσιμο μενού"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="drawer-scroll">
+        <a href="<?= SITE_URL ?>/"             class="<?= $active==='home'?'is-active':'' ?>"><i class="fa-solid fa-house nav-ic"></i> <span>Αρχική</span></a>
+        <div class="has-dropdown">
+          <a href="<?= SITE_URL ?>/about.php" class="<?= in_array($active,['about','history','master'])?'is-active':'' ?>"><i class="fa-solid fa-fire nav-ic"></i> <span>Ο Σύλλογος</span> <i class="fa-solid fa-chevron-down chev"></i></a>
+          <div class="dropdown">
+            <a href="<?= SITE_URL ?>/about.php">Ποιοι είμαστε</a>
+            <a href="<?= SITE_URL ?>/history.php">Η ιστορία μας</a>
+            <a href="<?= SITE_URL ?>/master.php">Ο δάσκαλος</a>
+          </div>
+        </div>
+        <div class="has-dropdown">
+          <a href="<?= SITE_URL ?>/athletes.php" class="<?= in_array($active,['athletes','athlete','trophies'])?'is-active':'' ?>"><i class="fa-solid fa-user-ninja nav-ic"></i> <span>Αθλητές</span> <i class="fa-solid fa-chevron-down chev"></i></a>
+          <div class="dropdown">
+            <a href="<?= SITE_URL ?>/athletes.php">Οι αθλητές μας</a>
+            <a href="<?= SITE_URL ?>/trophies.php">Τρόπαια &amp; διακρίσεις</a>
+          </div>
+        </div>
+        <a href="<?= SITE_URL ?>/schedule.php" class="<?= $active==='schedule'?'is-active':'' ?>"><i class="fa-solid fa-calendar-days nav-ic"></i> <span>Πρόγραμμα</span></a>
+        <a href="<?= SITE_URL ?>/gallery.php"  class="<?= $active==='gallery'?'is-active':'' ?>"><i class="fa-solid fa-camera nav-ic"></i> <span>Gallery</span></a>
+        <a href="<?= SITE_URL ?>/blog.php"     class="<?= $active==='blog'?'is-active':'' ?>"><i class="fa-solid fa-newspaper nav-ic"></i> <span>Νέα</span></a>
+        <a href="<?= SITE_URL ?>/contact.php"  class="<?= $active==='contact'?'is-active':'' ?>"><i class="fa-solid fa-envelope nav-ic"></i> <span>Επικοινωνία</span></a>
+        <a class="btn btn-book" href="<?= SITE_URL ?>/contact.php"><i class="fa-solid fa-user-plus"></i> Εγγραφή</a>
+      </div>
+      <div class="drawer-foot">
+        <?php $p2 = trim(setting('phone2', '6937125755')); if ($p2 !== ''): ?>
+          <a class="drawer-phone" href="tel:<?= e($p2) ?>"><i class="fa-solid fa-phone"></i> <?= e($p2) ?></a>
+        <?php endif; ?>
+        <div class="drawer-socials">
+          <?php foreach (social_links() as [$label, $url, $icon]): ?>
+            <a href="<?= e($url) ?>" target="_blank" rel="noopener" aria-label="<?= e($label) ?>"><i class="<?= e($icon) ?>"></i></a>
+          <?php endforeach; ?>
         </div>
       </div>
-      <div class="has-dropdown">
-        <a href="<?= SITE_URL ?>/athletes.php" class="<?= in_array($active,['athletes','athlete','trophies'])?'is-active':'' ?>">Αθλητές <i class="fa-solid fa-chevron-down"></i></a>
-        <div class="dropdown">
-          <a href="<?= SITE_URL ?>/athletes.php">Οι αθλητές μας</a>
-          <a href="<?= SITE_URL ?>/trophies.php">Τρόπαια &amp; διακρίσεις</a>
-        </div>
-      </div>
-      <a href="<?= SITE_URL ?>/schedule.php" class="<?= $active==='schedule'?'is-active':'' ?>">Πρόγραμμα</a>
-      <a href="<?= SITE_URL ?>/gallery.php"  class="<?= $active==='gallery'?'is-active':'' ?>">Gallery</a>
-      <a href="<?= SITE_URL ?>/blog.php"     class="<?= $active==='blog'?'is-active':'' ?>">Νέα</a>
-      <a href="<?= SITE_URL ?>/contact.php"  class="<?= $active==='contact'?'is-active':'' ?>">Επικοινωνία</a>
-      <a class="btn btn-book" href="<?= SITE_URL ?>/contact.php"><i class="fa-solid fa-user-plus"></i> Εγγραφή</a>
     </nav>
   </div>
 </header>

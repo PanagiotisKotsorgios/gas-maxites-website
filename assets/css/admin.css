@@ -63,6 +63,19 @@ h2 { font-family: var(--tech); font-size: 1.2rem; margin: 0 0 1rem; color: #fff;
 .admin-main { padding: 2rem 1.5rem 4rem; }
 .admin-wrap { max-width: 1240px; margin: 0 auto; }
 .admin-foot { text-align: center; padding: 1rem; color: var(--muted-2); }
+.admin-hint {
+  background: #FEF3C7;
+  border-left: 4px solid #F59E0B;
+  border-radius: 6px;
+  padding: .8rem 1rem;
+  margin: 0 0 1.2rem;
+  color: #78350F;
+  font-size: .92rem;
+  line-height: 1.5;
+}
+.admin-hint i.fa-circle-info { color: #B45309; margin-right: .35em; }
+.admin-hint a { color: #B45309; font-weight: 600; text-decoration: underline; }
+.admin-hint a:hover { color: #78350F; }
 
 .page-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.2rem; gap: 1rem; flex-wrap: wrap; }
 

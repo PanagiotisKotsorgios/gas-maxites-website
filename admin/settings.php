@@ -283,8 +283,15 @@ include __DIR__ . '/includes/admin_header.php';
     <input type="hidden" name="csrf" value="<?= e(csrf_token()) ?>">
     <input type="hidden" name="op" value="save">
     <?php foreach ($groups as $gkey => $glabel): ?>
-      <section class="panel">
+      <section class="panel" id="<?= e($gkey) ?>">
         <h2><?= $glabel ?></h2>
+        <?php if ($gkey === 'programs_h'): ?>
+          <p class="admin-hint">
+            <i class="fa-solid fa-circle-info"></i>
+            Εδώ αλλάζεις μόνο τους <strong>τίτλους της ενότητας</strong>. Για τις κάρτες τμημάτων (όνομα, ηλικίες, εικόνα, συνδρομή, περιγραφή) &rarr;
+            <a href="<?= SITE_URL ?>/admin/programs.php"><i class="fa-solid fa-people-group"></i> Τμήματα</a>.
+          </p>
+        <?php endif; ?>
         <div class="settings-grid">
           <?php foreach ($fields as $key => [$label, $type, $ph, $group]):
             if ($group !== $gkey) continue; ?>

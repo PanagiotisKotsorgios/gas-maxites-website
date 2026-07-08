@@ -80,6 +80,12 @@ include __DIR__ . '/includes/admin_header.php';
 ?>
 <div class="admin-wrap">
   <h1>Τμήματα</h1>
+  <p class="admin-hint">
+    <i class="fa-solid fa-circle-info"></i>
+    Εδώ διαχειρίζεσαι το περιεχόμενο κάθε <strong>κάρτας τμήματος</strong> (όνομα, ηλικίες, περιγραφή, εικόνα/εικονίδιο, συνδρομή).
+    Για τους <strong>τίτλους της ενότητας</strong> (eyebrow, τίτλος, υπότιτλος) στην αρχική σελίδα &rarr;
+    <a href="<?= SITE_URL ?>/admin/settings.php#programs_h"><i class="fa-solid fa-gear"></i> Ρυθμίσεις &raquo; Αρχική — Τμήματα (headings)</a>.
+  </p>
   <?php if ($flash): ?><p class="alert alert-success"><?= e($flash) ?></p><?php endif; ?>
   <div class="two-panels">
     <section class="panel">

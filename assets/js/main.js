@@ -1,13 +1,66 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Mobile nav
-  const btn = document.querySelector('.nav-toggle');
-  const nav = document.querySelector('.site-nav');
-  if (btn && nav) {
-    btn.addEventListener('click', () => {
-      const open = nav.classList.toggle('is-open');
-      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  // =========================================================
+  // Mobile nav drawer
+  // ---------------------------------------------------------
+  // Slide-in drawer with backdrop, body-scroll lock, Esc to
+  // close, click-outside to close, accordion-style dropdowns
+  // (tap parent to expand/collapse on mobile only).
+  // =========================================================
+  const navBtn      = document.querySelector('.nav-toggle');
+  const nav         = document.querySelector('.site-nav');
+  const navBackdrop = document.querySelector('.nav-backdrop');
+  const drawerClose = document.querySelector('.drawer-close');
+
+  const isMobile = () => window.matchMedia('(max-width: 960px)').matches;
+
+  const openDrawer = () => {
+    if (!nav) return;
+    nav.classList.add('is-open');
+    navBackdrop && navBackdrop.classList.add('is-open');
+    navBtn && navBtn.setAttribute('aria-expanded', 'true');
+    navBtn && navBtn.setAttribute('aria-label', 'Κλείσιμο μενού');
+    document.body.classList.add('nav-open');
+  };
+  const closeDrawer = () => {
+    if (!nav) return;
+    nav.classList.remove('is-open');
+    navBackdrop && navBackdrop.classList.remove('is-open');
+    navBtn && navBtn.setAttribute('aria-expanded', 'false');
+    navBtn && navBtn.setAttribute('aria-label', 'Άνοιγμα μενού');
+    document.body.classList.remove('nav-open');
+    // Collapse any expanded accordion when closing
+    document.querySelectorAll('.site-nav .has-dropdown.is-expanded').forEach(el => el.classList.remove('is-expanded'));
+  };
+
+  if (navBtn && nav) {
+    navBtn.addEventListener('click', () => {
+      nav.classList.contains('is-open') ? closeDrawer() : openDrawer();
     });
   }
+  if (drawerClose) drawerClose.addEventListener('click', closeDrawer);
+  if (navBackdrop)  navBackdrop.addEventListener('click', closeDrawer);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && nav && nav.classList.contains('is-open')) closeDrawer();
+  });
+
+  // Close drawer when a leaf link inside is clicked (SPA-like feel)
+  document.querySelectorAll('.site-nav .drawer-scroll a').forEach(link => {
+    link.addEventListener('click', (e) => {
+      // Skip parent-of-dropdown toggle: on mobile that toggles the accordion
+      if (isMobile() && link.parentElement.classList.contains('has-dropdown') && link.parentElement.querySelector('.dropdown')) {
+        e.preventDefault();
+        link.parentElement.classList.toggle('is-expanded');
+        return;
+      }
+      // For leaf links, close the drawer as the page navigates
+      if (isMobile()) closeDrawer();
+    });
+  });
+
+  // Reset drawer state when resizing back up to desktop
+  window.addEventListener('resize', () => {
+    if (!isMobile() && nav && nav.classList.contains('is-open')) closeDrawer();
+  });
 
   // Lightbox
   const lightbox = document.getElementById('lightbox');
