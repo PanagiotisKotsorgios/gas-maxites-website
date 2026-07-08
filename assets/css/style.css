@@ -236,12 +236,15 @@ h4 { font-size: 1rem; margin: 0 0 .6em; }
   }
   .drawer-close:hover { background: rgba(224,36,36,.15); border-color: var(--red); transform: rotate(90deg); }
 
-  /* Scrollable link list */
-  .drawer-scroll {
+  /* Scrollable link list — override desktop `display: contents` */
+  .site-nav > .drawer-scroll {
     flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch;
     padding: .5rem .8rem 1rem;
     display: flex; flex-direction: column; gap: .15rem;
   }
+  /* When drawer is open, hide the hamburger so there's only one X (the drawer's close button) */
+  .site-nav.is-open ~ .nav-toggle,
+  body.nav-open .nav-toggle { opacity: 0; visibility: hidden; pointer-events: none; }
   .site-nav > .drawer-scroll > a,
   .site-nav .has-dropdown > a {
     display: flex; align-items: center; gap: .85rem;
