@@ -193,6 +193,7 @@ $fields = [
     'schedule_prog_title'   => ['Section “Τμήματα” τίτλος', 'text', 'Επιλέξτε την ομάδα που ταιριάζει', 'schedule_pg'],
     'schedule_week_eyebrow' => ['Section “Εβδομαδιαίο” eyebrow', 'text', 'Εβδομαδιαίο πρόγραμμα', 'schedule_pg'],
     'schedule_week_title'   => ['Section “Εβδομαδιαίο” τίτλος', 'text', 'Ημέρες & ώρες προπονήσεων', 'schedule_pg'],
+    'schedule_week_note'    => ['Section “Εβδομαδιαίο” υπότιτλος', 'text', 'Η στήλη της σημερινής ημέρας είναι επισημασμένη. Σύρετε πλάγια σε κινητό.', 'schedule_pg'],
 
     // --- Contact page ---
     'contact_page_bg'      => ['Εικόνα hero (URL)', 'text', '', 'contact_pg'],

@@ -23,7 +23,7 @@ $active      = $active      ?? '';
 <link rel="icon" type="image/jpeg" href="<?= SITE_URL ?>/assets/img/logo.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
 <link rel="stylesheet" href="<?= SITE_URL ?>/assets/css/style.css">
 </head>
@@ -51,10 +51,6 @@ $active      = $active      ?? '';
   <div class="wrap header-inner">
     <a class="brand" href="<?= SITE_URL ?>/">
       <img src="<?= SITE_URL ?>/assets/img/logo.jpg" alt="<?= e(SITE_NAME) ?>" class="brand-logo">
-      <span class="brand-text">
-        <strong><?= e(SITE_NAME_SHORT) ?></strong>
-        <em>Taekwondo Μεσολόγγι</em>
-      </span>
     </a>
     <button class="nav-toggle" aria-label="Μενού" aria-expanded="false">
       <span></span><span></span><span></span>

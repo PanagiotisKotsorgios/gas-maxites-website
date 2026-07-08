@@ -65,6 +65,82 @@ document.addEventListener('DOMContentLoaded', () => {
     st.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
     onScroll();
   }
+
+  // =========================================================
+  // Scroll-triggered entrance animations
+  // ---------------------------------------------------------
+  // Every "block-level" element below the fold fades up as it
+  // enters the viewport. Containers with grid-of-cards get their
+  // children staggered via .reveal-group.
+  // =========================================================
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!prefersReduced && 'IntersectionObserver' in window) {
+
+    // Sections + banner blocks — each fades in as a whole.
+    const blockSel = [
+      '.section',
+      '.cta-band',
+      '.trophies-band',
+      '.reviews-band',
+      '.split',
+      '.master-grid',
+      '.timeline',
+      '.contact-grid',
+      '.article-wrap',
+      '.sched-table-wrap',
+      '.sched-legend',
+      '.footer-newsletter',
+      '.footer-grid',
+      '.footer-legal',
+    ].join(', ');
+
+    // Groups of cards/items whose children should stagger in.
+    const groupSel = [
+      '.features-grid',
+      '.cards-grid',
+      '.athletes-grid',
+      '.trophies-grid',
+      '.gallery-preview',
+      '.gallery-grid',
+      '.quotes-grid',
+      '.programs-list',
+      '.timeline',
+      '.fact-list',
+      '.split-stats',
+      '.footer-grid',
+    ].join(', ');
+
+    // Skip reveal for elements already fully or partially above the fold —
+    // they'd flash otherwise. The hero already has its own page-load stagger.
+    const foldY = window.innerHeight * 0.9;
+    const isBelowFold = (el) => el.getBoundingClientRect().top >= foldY;
+
+    document.querySelectorAll(blockSel).forEach(el => {
+      if (isBelowFold(el)) el.classList.add('reveal');
+    });
+    document.querySelectorAll(groupSel).forEach(el => {
+      Array.from(el.children).forEach((child, i) => {
+        child.style.setProperty('--pl-i', i);
+      });
+      if (isBelowFold(el)) el.classList.add('reveal-group');
+    });
+    document.querySelectorAll('.section-head, .page-head').forEach(el => {
+      if (isBelowFold(el)) el.classList.add('reveal');
+    });
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal, .reveal-group').forEach(el => io.observe(el));
+  } else if (prefersReduced) {
+    document.querySelectorAll('.reveal, .reveal-group').forEach(el => el.classList.add('is-visible'));
+  }
 });
 
 function acceptCookies() { closeCookieBanner('all'); }

@@ -18,8 +18,6 @@ $google_reviews = [
      'text'=>'Είναι το καλύτερο μέρος που κάποιο παιδί μπορεί να μάθει το άθλημα του taekwondo, να εξελιχθεί ώστε να μπορεί να συμμετέχει σε αγώνες είτε να μάθει πολεμική τέχνη.'],
     ['name'=>'Makis Aspiotis','when'=>'πριν από 6 μήνες','stars'=>5,
      'text'=>'Απο τους πιο έμπειρους δασκάλους του χώρου.'],
-    ['name'=>'Pinelopi Anastasiou','when'=>'πριν από 2 χρόνια','stars'=>5,
-     'text'=>'Ο σύλλογος Μαχητές είναι μια εμπειρία… Ο δάσκαλος είναι αξιόλογος. Ο χώρος ευχάριστος! Μπράβο!'],
 ];
 $google_reviews_url = setting('google_reviews_url', 'https://www.google.com/search?q=%CE%9C%CE%91%CE%A7%CE%97%CE%A4%CE%95%CE%A3+%CE%9C%CE%B5%CF%83%CE%BF%CE%BB%CE%BF%CE%B3%CE%B3%CE%AF%CE%BF%CF%85');
 
@@ -109,17 +107,10 @@ include __DIR__ . '/includes/header.php';
     <div class="cards-grid">
       <?php foreach ($programs as $p): ?>
         <article class="card program-card">
-          <?php if (!empty($p['image'])): ?>
-            <div class="prog-img" style="background-image:url('<?= SITE_URL ?>/uploads/programs/<?= e($p['image']) ?>');" aria-hidden="true"></div>
-          <?php else: ?>
-            <div class="prog-ic"><i class="<?= e(!empty($p['icon']) ? $p['icon'] : 'fa-solid fa-hand-fist') ?>"></i></div>
-          <?php endif; ?>
+          <div class="prog-img" style="background-image:url('<?= e(program_image_url($p)) ?>');" aria-hidden="true"></div>
           <h3><?= e($p['name']) ?></h3>
           <?php if ($p['age_range']): ?><p class="prog-age"><i class="fa-solid fa-user-group"></i> <?= e($p['age_range']) ?></p><?php endif; ?>
           <?php if ($p['description']): ?><p><?= e(mb_strimwidth($p['description'], 0, 130, '…', 'UTF-8')) ?></p><?php endif; ?>
-          <?php if ($p['monthly_fee'] !== null): ?>
-            <p class="prog-fee"><span>Συνδρομή</span> <strong><?= number_format((float)$p['monthly_fee'], 0) ?>€ / μήνα</strong></p>
-          <?php endif; ?>
         </article>
       <?php endforeach; ?>
     </div>
