@@ -1,0 +1,5 @@
+DirectoryIndex index.php
+Options -Indexes
+<Files ~ "^\.(installed|htaccess|htpasswd)$">
+    Require all denied
+</Files>

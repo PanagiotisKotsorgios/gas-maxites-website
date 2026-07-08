@@ -1,0 +1,33 @@
+# Local secrets / marker files
+.env
+.env.*
+!.env.example
+.installed
+
+# User-uploaded content (persist via Docker volume in production)
+uploads/gallery/*
+uploads/posts/*
+uploads/athletes/*
+uploads/trophies/*
+uploads/programs/*
+!uploads/**/.gitkeep
+!uploads/**/.htaccess
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+
+# Dependencies (none in-tree today, but future-proof)
+node_modules/
+vendor/
+
+# See file was empty placeholder
+see.txt

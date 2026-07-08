@@ -1,0 +1,46 @@
+# Local dev + Coolify-compatible compose.
+# Coolify can consume this directly, or use just the Dockerfile and connect
+# to an external MySQL/MariaDB it manages.
+
+services:
+  web:
+    build: .
+    image: gas-maxites:latest
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      DB_HOST: ${DB_HOST:-db}
+      DB_NAME: ${DB_NAME:-gas_maxites}
+      DB_USER: ${DB_USER:-maxites}
+      DB_PASS: ${DB_PASS:-maxites_secret}
+      SITE_NAME: ${SITE_NAME:-Γ.Α.Σ. Μαχητές Μεσολογγίου}
+      SITE_NAME_SHORT: ${SITE_NAME_SHORT:-ΜΑΧΗΤΕΣ}
+      SITE_URL: ${SITE_URL:-http://localhost:8080}
+      IP_HASH_SALT: ${IP_HASH_SALT:-dev-only-change-me}
+    volumes:
+      # Persist user-uploaded content across image rebuilds
+      - uploads:/var/www/html/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mariadb:11
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASS:-root_secret}
+      MARIADB_DATABASE: ${DB_NAME:-gas_maxites}
+      MARIADB_USER: ${DB_USER:-maxites}
+      MARIADB_PASSWORD: ${DB_PASS:-maxites_secret}
+    volumes:
+      - dbdata:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+
+volumes:
+  uploads:
+  dbdata:
